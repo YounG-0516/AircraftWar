@@ -1,7 +1,10 @@
 package edu.hitsz.aircraft;
 
-import edu.hitsz.application.Game;
-import edu.hitsz.bullet.Bullet;
+import edu.hitsz.application.Main;
+import edu.hitsz.application.game.Game;
+import edu.hitsz.basic.Observer;
+import edu.hitsz.bullet.BaseBullet;
+import edu.hitsz.prop.AbstractProp;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -12,18 +15,9 @@ import java.util.List;
  *
  * @author hitsz
  */
-public class MobEnemy extends AbstractAircraft {
-    /**
-     * 获得敌机分数，击毁敌机时，调用该方法获得分数。
-     * @return 敌机的分数
-     */
-    public int score() {
-        return 10;
-    }
+public class MobEnemy extends AbstractAircraft implements Observer {
 
-    private static final List<Bullet> EMPTY_BULLETS = new LinkedList<>();
-
-    public MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp) {
+    public MobEnemy(int locationX, int locationY, double speedX, double speedY, int hp) {
         super(locationX, locationY, speedX, speedY, hp);
     }
 
@@ -31,13 +25,24 @@ public class MobEnemy extends AbstractAircraft {
     public void forward() {
         super.forward();
         // 判定 y 轴向下飞行出界
-        if (locationY >= Game.WINDOW_HEIGHT ) {
+        if (locationY >= Main.WINDOW_HEIGHT ) {
             vanish();
         }
     }
 
     @Override
-    public List<Bullet> shoot() {
-        return EMPTY_BULLETS;
+    public List<BaseBullet> shoot() {
+        return executeStrategy(locationX, locationY, speedX, speedY, 1);
     }
+
+    public List<AbstractProp> dropProps(){
+        return new LinkedList<AbstractProp>();
+    }
+
+    @Override
+    public void update() {
+        this.vanish();
+        Game.addScore(10);
+    }
+
 }

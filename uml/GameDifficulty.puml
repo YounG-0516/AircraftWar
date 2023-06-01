@@ -1,0 +1,57 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+Abstract class Game{
+    # cycleDuration:int
+    # enemyMaxNumber:int
+    # probability:double
+    # threshold:int
+    # cycleDurationForIncreaseDifficulty:int
+    # isChange:boolean
+    # BOSS_ENEMY_HP:int
+    + action():void
+    # canEnemyShoot():boolean
+    # canHeroShoot():boolean
+    # {abstract} upDateVersion():void
+    # {abstract} addEnemy():void
+    # {abstract} generateBoss():void
+    # {abstract} increaseDifficulty():void
+    # isBossExist():boolean
+}
+
+class EasyGame{
+    - canEnemyShootFlag:boolean
+    # canEnemyShoot():boolean
+    # upDateVersion():void
+    # addEnemy():void
+    # generateBoss():void
+    # increaseDifficulty():void
+}
+
+class MediumGame{
+    - property:double
+    + {static} isUpdata:boolean
+    # upDateVersion():void
+    # addEnemy():void
+    # generateBoss():void
+    # increaseDifficulty():void
+}
+
+class HardGame{
+    - BossNum:int
+    - canHeroShootFlag:boolean
+    - property:double
+    - increaseThreshold:int
+    + {static} isUpdata:boolean
+    # canHeroShoot():boolean
+    # upDateVersion():void
+    # addEnemy():void
+    # generateBoss():void
+    # increaseDifficulty():void
+}
+
+Game <|-- EasyGame
+Game <|-- MediumGame
+Game <|-- HardGame
+
+@enduml

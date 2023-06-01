@@ -1,0 +1,50 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class RankingList{
+    - userDao:UserDao
+    - userList:List<User>
+    + RankingList(int level)
+    - getScoreTable():void
+    + inputUser(int score, int level):void
+    + refresh(int level):void
+    + getMainPanel():JPanel
+}
+
+interface UserDao{
+    + {abstract} addData(User user,int level):void
+    + {abstract} deleteData(int row,int level):void
+    + {abstract} writeData(int level):void
+    + {abstract} printData(int level):void
+    + {abstract} getAllData(int level):List<User>
+}
+
+class UserDaoImpl{
+    - scoreList:List<User>
+    - file:File
+    + UserDaoImpl(int level)
+    + addData(User user,int level):void
+    + deleteData(int row,int level):void
+    + writeData(int level):void
+    + printData(int level):void
+    + getAllData(int level):List<User>
+}
+
+class User{
+    - score:int
+    - userName:String
+    - overTime:String
+    + setUserName(String userName):void
+    + getUserName():String
+    + setScore(int score):void
+    + getScore():int
+    + setOverTime(String overTime):void
+    + getTime():String
+}
+
+UserDao <|.. UserDaoImpl
+RankingList ..> UserDao
+UserDaoImpl --> User
+
+
+@enduml

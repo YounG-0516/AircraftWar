@@ -1,0 +1,61 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface PropFactory{
+    + {abstract} createProp(int locationX, int locationY):AbstractProp
+}
+
+class BloodPropFactory{
+    + createProp(int locationX, int locationY):AbstractProp
+}
+
+class BombPropFactory{
+    + createProp(int locationX, int locationY):AbstractProp
+}
+
+class BulletPropFactory{
+    + createProp(int locationX, int locationY):AbstractProp
+}
+
+PropFactory<|..BloodPropFactory
+PropFactory<|..BombPropFactory
+PropFactory<|..BulletPropFactory
+
+abstract class AbstractProp
+{
+    + AbstractProp(int locationX, int locationY, double speedX, double speedY)
+    + forward():void
+	+ {abstract} effect(AbstractAircraft aircraft):void
+}
+
+class BloodProp
+{
+    + BloodProp(int locationX, int locationY, double speedX, double speedY)
+	+ effect(AbstractAircraft aircraft):void
+}
+
+class BombProp
+{
+    - observerLists:List<Observer>
+    + BombProp(int locationX, int locationY, double speedX, double speedY)
+    + addObserver(Observer observer):void
+    + notifyAllFlyings():void
+	+ effect(AbstractAircraft aircraft):void
+}
+
+class BulletProp
+{
+    - effectCalled:boolean
+    + BulletProp(int locationX, int locationY, double speedX, double speedY)
+	+ effect(AbstractAircraft aircraft):void
+}
+
+AbstractProp <|-- BloodProp
+AbstractProp <|-- BombProp
+AbstractProp <|-- BulletProp
+
+BloodPropFactory..>BloodProp
+BombPropFactory..>BombProp
+BulletPropFactory..>BulletProp
+
+@enduml

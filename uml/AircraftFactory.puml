@@ -1,0 +1,74 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface AircraftFactory{
+    + {abstract} AbstractAircraft createAircraft(double speedX, double speedY, int hp):AbstractAircraft
+}
+
+class MobEnemyFactory{
+    + createAircraft(double speedX, double speedY, int hp):AbstractAircraft
+}
+
+class EliteEnemyFactory{
+    + createAircraft(double speedX, double speedY, int hp):AbstractAircraft
+}
+
+class BossEnemyFactory{
+    + createAircraft(double speedX, double speedY, int hp):AbstractAircraft
+}
+
+AircraftFactory<|..MobEnemyFactory
+AircraftFactory<|..EliteEnemyFactory
+AircraftFactory<|..BossEnemyFactory
+
+abstract class AbstractAircraft
+{
+	# maxHp:int
+    # hp:int
+    # propfactory:PropFactory
+    - shootStrategy:ShootStrategy
+    + AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+    + decreaseHp(int decrease):void
+    + getHp():int
+    + getMaxHp():int
+    + setStrategy(ShootStrategy shootStrategy):void
+    + executeStrategy(int locationX, int locationY, double speedX, double speedY,int direction):List<BaseBullet>
+    + {abstract} shoot():List<BaseBullet>
+    + {abstract} dropProps():List<AbstractProp>
+}
+
+class MobEnemy {
+    + MobEnemy(int locationX, int locationY, double speedX, double speedY, int hp)
+    + forward():void
+    + shoot():List<BaseBullet>
+    + dropProps():List<AbstractProp>
+    + update():void
+}
+
+class EliteAircraft {
+    - direction:int
+    + EliteEnemy(int locationX, int locationY, double speedX, double speedY, int hp)
+    + forward():void
+    + shoot():List<BaseBullet>
+    + dropProps():List<AbstractProp>
+    + update():void
+}
+
+class BossAircraft {
+    - direction:int
+    - propNum:int
+    + BossAircraft(int locationX, int locationY, double speedX, double speedY, int hp)
+    + forward():void
+    + shoot():List<BaseBullet>
+    + dropProps():List<AbstractProp>
+    + update():void
+}
+
+AbstractAircraft <|-- MobEnemy
+AbstractAircraft <|-- EliteAircraft
+AbstractAircraft <|-- BossAircraft
+
+MobEnemyFactory..>MobEnemy
+EliteEnemyFactory..>EliteAircraft
+BossEnemyFactory..>BossAircraft
+@enduml

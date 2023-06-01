@@ -1,6 +1,9 @@
 package edu.hitsz.application;
 
+import edu.hitsz.application.frame.Menu;
 import javax.swing.*;
+import java.awt.*;
+
 
 /**
  * 程序入口
@@ -8,17 +11,31 @@ import javax.swing.*;
  */
 public class Main {
 
+    public static final int WINDOW_WIDTH = 512;
+    public static final int WINDOW_HEIGHT = 768;
+    public static final CardLayout cardLayout = new CardLayout(0,0);
+    public static final JPanel cardPanel = new JPanel(cardLayout);
+
     public static void main(String[] args) {
+
         System.out.println("Hello Aircraft War");
 
+        // 获得屏幕的分辨率，初始化 Frame
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
         JFrame frame = new JFrame("Aircraft War");
-        Game game = new Game();
-        frame.add(game);
-        frame.setSize(Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT);
-        // 固定窗口尺寸
+        frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         frame.setResizable(false);
-        frame.setVisible(true);
+        //设置窗口的大小和位置,居中放置
+        frame.setBounds(((int) screenSize.getWidth() - WINDOW_WIDTH) / 2, 0,
+                WINDOW_WIDTH, WINDOW_HEIGHT);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        game.action();
+
+        frame.add(cardPanel);
+        Menu menu = new Menu();
+        cardPanel.add(menu.getMainPanel());
+        frame.setVisible(true);
+
+
     }
 }

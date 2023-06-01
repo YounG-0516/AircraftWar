@@ -1,0 +1,150 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+abstract class AbstractFlyingObject
+{
+    # locationX:int
+    # locationY:int
+    # speedX:double
+    # speedY:double
+    # image:BufferedImage
+    # width:int
+    # height:int
+    # isValid:boolean
+
+    + AbstractFlyingObject(int locationX, int locationY, double speedX, double speedY)
+    + forward():void
+    + crash(AbstractFlyingObject flyingObject):boolean
+    + setLocation(double locationX, double locationY):void
+    + getLocationX():int
+    + getLocationY():int
+    + getSpeedY():int
+    + getSpeedX():int
+    + getImage():BufferedImage
+    + getWidth():int
+    + getHeight():int
+    + notValid():boolean
+    + vanish():void
+}
+
+abstract class AbstractAircraft
+{
+	# maxHp:int
+    # hp:int
+    # propfactory:PropFactory
+    - shootStrategy:ShootStrategy
+    + AbstractAircraft(int locationX, int locationY, double speedX, double speedY, int hp)
+    + decreaseHp(int decrease):void
+    + getHp():int
+    + getMaxHp():int
+    + setStrategy(ShootStrategy shootStrategy):void
+    + executeStrategy(int locationX, int locationY, double speedX, double speedY,int direction):List<BaseBullet>
+    + {abstract} shoot():List<BaseBullet>
+    + {abstract} dropProps():List<AbstractProp>
+}
+
+class HeroAircraft {
+    - direction:int
+    - {static} heroAircraft:HeroAircraft
+    - HeroAircraft(int locationX, int locationY, double speedX, double speedY, int hp)
+    + {static} getHeroAircraft():HeroAircraft
+    + forward():void
+    + shoot():List<BaseBullet>
+    + dropProps():List<AbstractProp>
+}
+
+AbstractAircraft <|-- HeroAircraft
+
+class MobEnemy {
+    + MobEnemy(int locationX, int locationY, double speedX, double speedY, int hp)
+    + forward():void
+    + shoot():List<BaseBullet>
+    + dropProps():List<AbstractProp>
+    + update():void
+}
+
+AbstractAircraft <|-- MobEnemy
+
+class EliteAircraft {
+    - direction:int
+    + EliteEnemy(int locationX, int locationY, double speedX, double speedY, int hp)
+    + forward():void
+    + shoot():List<BaseBullet>
+    + dropProps():List<AbstractProp>
+    + update():void
+}
+
+AbstractAircraft <|-- EliteAircraft
+
+class BossAircraft {
+    - direction:int
+    - propNum:int
+    + BossAircraft(int locationX, int locationY, double speedX, double speedY, int hp)
+    + forward():void
+    + shoot():List<BaseBullet>
+    + dropProps():List<AbstractProp>
+    + update():void
+}
+
+AbstractAircraft <|-- BossAircraft
+
+abstract class BaseBullet
+{
+    - power:int
+    + BaseBullet(int locationX, int locationY, double speedX, double speedY, int hp)
+    + forward():void
+	+ getPower():int
+}
+
+class HeroBullet {
+    + HeroBullet(int locationX, int locationY,
+     int speedX, int speedY, int power)
+}
+
+BaseBullet <|-- HeroBullet
+
+class EnemyBullet {
+    + EnemyBullet(int locationX, int locationY,
+     int speedX, int speedY, int power)
+    + update():void
+}
+
+BaseBullet <|-- EnemyBullet
+
+abstract class AbstractProp
+{
+    + AbstractProp(int locationX, int locationY, double speedX, double speedY)
+    + forward():void
+	+ {abstract} effect(AbstractAircraft aircraft):void
+}
+
+class BloodProp
+{
+    + BloodProp(int locationX, int locationY, double speedX, double speedY)
+	+ effect(AbstractAircraft aircraft):void
+}
+AbstractProp <|-- BloodProp
+
+class BombProp
+{
+    - observerLists:List<Observer>
+    + BombProp(int locationX, int locationY, double speedX, double speedY)
+    + addObserver(Observer observer):void
+    + notifyAllFlyings():void
+	+ effect(AbstractAircraft aircraft):void
+}
+AbstractProp <|-- BombProp
+
+class BulletProp
+{
+    - effectCalled:boolean
+    + BulletProp(int locationX, int locationY, double speedX, double speedY)
+	+ effect(AbstractAircraft aircraft):void
+}
+AbstractProp <|-- BulletProp
+
+AbstractFlyingObject <|-- AbstractAircraft
+AbstractFlyingObject <|-- BaseBullet
+AbstractFlyingObject <|-- AbstractProp
+
+@enduml

@@ -1,3 +1,13 @@
-第1名： textUserName, 460, 04-07 12:03
-第2名： textUserName, 80, 04-07 12:04
-第3名： textUserName, 50, 04-07 12:01
+第1名： textUserName, 820, 04-07 15:49
+第2名： textUserName, 460, 04-07 12:03
+第3名： textUserName, 450, 04-13 12:12
+第4名： textUserName, 400, 04-11 22:01
+第5名： textUserName, 360, 04-13 12:14
+第6名： textUserName, 320, 04-11 22:03
+第7名： textUserName, 140, 04-07 12:09
+第8名： textUserName, 100, 04-11 19:25
+第9名： textUserName, 80, 04-07 12:04
+第10名： textUserName, 60, 04-11 22:00
+第11名： textUserName, 50, 04-07 12:01
+第12名： textUserName, 50, 04-11 19:25
+第13名： textUserName, 20, 04-11 18:46

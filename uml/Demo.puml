@@ -1,0 +1,44 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+class 类
+{
+    + 公有成员变量: String
+    - 私有成员变量: int
+    # 受保护的成员变量: Date
+    + {static} 静态成员变量: String
+
+    + 构造函数(int 参数1)
+    + 普通方法(int 参数1, String 参数2): void
+    + {abstract} 抽象方法(): int
+    + {static} 静态方法(int 参数1, String 参数2): String
+}
+
+abstract class 父类A
+class 子类B
+父类A <|-- 子类B
+
+interface 接口C
+class 实现类D
+接口C <|.. 实现类D
+
+class 依赖类E
+class 被依赖类F
+依赖类E ..> 被依赖类F
+
+class 一般关联类G
+class 被关联类H
+一般关联类G --> 被关联类H
+
+class 整体类I
+class 可独立部分类J
+整体类I o--> 可独立部分类J
+
+class 整体类K
+class 不可独立部分类L
+整体类K *--> 不可独立部分类L
+
+
+
+@enduml

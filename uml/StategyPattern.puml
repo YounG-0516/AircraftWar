@@ -1,0 +1,44 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface ShootStrategy{
+    + {abstract} shootAction(int locationX, int locationY, double speedX, double speedY, int direction):List<BaseBullet>
+}
+
+class ScatterShootStrategy {
+    + shootAction(int locationX, int locationY, double speedX, double speedY, int direction):List<BaseBullet>
+}
+
+class StraightShootStrategy {
+    + shootAction(int locationX, int locationY, double speedX, double speedY, int direction):List<BaseBullet>
+}
+
+class NoneShootStrategy {
+    + shootAction(int locationX, int locationY, double speedX, double speedY, int direction):List<BaseBullet>
+}
+class UpdateStraightShootStrategy{
+    + shootAction(int locationX, int locationY, double speedX, double speedY, int direction):List<BaseBullet>
+}
+
+abstract class AbstractAircraft
+{
+	# maxHp:int
+    # hp:int
+    # propfactory:PropFactory
+    - shootStrategy:ShootStrategy
+    + AbstractAircraft(int locationX, int locationY, double speedX, double speedY, int hp)
+    + decreaseHp(int decrease):void
+    + getHp():int
+    + getMaxHp():int
+    + setStrategy(ShootStrategy shootStrategy):void
+    + executeStrategy(int locationX, int locationY, double speedX, double speedY,int direction):List<BaseBullet>
+    + {abstract} shoot():List<BaseBullet>
+    + {abstract} dropProps():List<AbstractProp>
+ }
+
+ShootStrategy <|.. ScatterShootStrategy
+ShootStrategy <|.. StraightShootStrategy
+ShootStrategy <|.. NoneShootStrategy
+ShootStrategy <|.. UpdateStraightShootStrategy
+AbstractAircraft o--> ShootStrategy
+@enduml
